@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchSpotifyData } from '../services/fetchSpotifyData';
+import ScrollText from './ScrollText';
 
 const Home = ({ accessToken }) => {
   const [loading, setLoading] = useState(true)
@@ -46,30 +47,37 @@ const Home = ({ accessToken }) => {
   if (error) {
     return <h1>Error fetching spotify data.</h1>;
   }
+  console.log(topMonthTracks)
 
   return (
-    <div>
-      <h1>My Sound</h1>
-      <div>
-        <div>
-          <img src={userData.images[0]?.url} alt="Profile" width="50" height="50" />
-          <div>
+    <div className='home'>
+      <h1 className='title'>My Sound</h1>
+      <div className='profile'>
+        <div className='homeDataContainer'>
+          <div className='profilePictureContainer' style={{ backgroundImage: `url(${userData.images[0]?.url})` }}>
+          </div>
+          <div className='featureSongs'>
             <h3>GOAT Song:</h3>
-            <h4>{topAllTimeTracks.items[0].name} - {topAllTimeTracks.items[0].album.name}</h4>
+            <ScrollText text={topAllTimeTracks.items[0].name} />
+            <ScrollText text={topAllTimeTracks.items[0].artists.map((artist) => artist.name).join(', ')}/>
             <h3>6 Month Leader:</h3>
-            <h4>{topSixMonthsTracks.items[0].name} - {topSixMonthsTracks.items[0].album.name}</h4>
+            <ScrollText text={topSixMonthsTracks.items[0].name} />
+            <ScrollText text={topSixMonthsTracks.items[0].artists.map((artist) => artist.name).join(', ')}/>
             <h3>Hot Right Now:</h3>
-            <h4>{topMonthTracks.items[0].name} - {topMonthTracks.items[0].album.name}</h4>
+            <ScrollText text={topMonthTracks.items[0].name} />
+            <ScrollText text={topMonthTracks.items[0].artists.map((artist) => artist.name).join(', ')}/>
           </div>
         </div>
-        <h2>{userData.display_name}</h2>
+        <h2 className='userName'>{userData.display_name}</h2>
       </div>
       <section>
         <h2>Top 50: All Time</h2>
         <ul>
           {topAllTimeTracks.items.map((song, index) => (
             <li key={index}>
-              {song.name} - {song.album.name}
+              {song.name}
+              <br/>
+              {song.artists.map((artist) => artist.name).join(', ')}
             </li>
           ))}
         </ul>
@@ -79,7 +87,9 @@ const Home = ({ accessToken }) => {
         <ul>
           {topSixMonthsTracks.items.map((song, index) => (
             <li key={index}>
-              {song.name} - {song.album.name}
+              {song.name}
+              <br/>
+              {song.artists.map((artist) => artist.name).join(', ')}
             </li>
           ))}
         </ul>
@@ -89,7 +99,9 @@ const Home = ({ accessToken }) => {
         <ul>
           {topMonthTracks.items.map((song, index) => (
             <li key={index}>
-              {song.name} - {song.album.name}
+              {song.name} 
+              <br/>
+              {song.artists.map((artist) => artist.name).join(', ')}
             </li>
           ))}
         </ul>
