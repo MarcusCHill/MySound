@@ -1,0 +1,57 @@
+body{
+    background-color: lightblue;
+}
+.title{
+    text-align: center;
+}
+.profile{
+    display: flex;
+    flex-direction: column;
+}
+.homeDataContainer{
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+}
+.profilePictureContainer {
+    width: 30vw;               
+    padding-top: 27.81%;         
+    border-radius: 50%;       
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+}
+.featureSongs{
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+    margin-right: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 70%;            
+    overflow: hidden;         
+}
+.scrollContainer {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+}
+.scrollText {
+    display: inline-block;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    transition: transform 0.1s linear;
+}  
+@media screen and (min-width: 768px){
+   
+}
+@media screen and (min-width: 1024px){
+   
+}
