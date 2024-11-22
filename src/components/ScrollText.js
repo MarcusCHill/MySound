@@ -35,7 +35,10 @@ const ScrollText = ({ text }) => {
 
             currentPosition += direction * 0.5; 
 
-            textRef.current.style.transform = `translateX(${currentPosition}px)`;
+            if(textRef){
+                textRef.current.style.transform = `translateX(${currentPosition}px)`;
+            }
+            
 
             if (isScrolling.current) {
                 requestAnimationFrame(scroll);
