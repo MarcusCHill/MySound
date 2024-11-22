@@ -1,8 +1,17 @@
 import React from "react";
+import { useSpotifyData } from "../services/spotifyDataContext";
 import HamburgerNav from "./HamburgerNav";
+import Loading from "./Loading";
 import TopTracks from "./TopTracks";
 
 const SixMonths = () => {
+
+    const { loading } = useSpotifyData();
+
+    if (loading) {
+        return <Loading/>;
+    }
+
     return (
         <div className="page">
             <HamburgerNav/>
