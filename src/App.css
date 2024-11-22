@@ -1,6 +1,19 @@
 body{
     background-color: white;
 }
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(26, 137, 234, 0.777);
+}
+.login h2{
+    margin: 0;
+    color: white;
+}
 .loading{
     display: flex;
     width: 100vw;
@@ -9,7 +22,119 @@ body{
     align-items: center;
     font-size: 1.5rem;
 }
-.home{
+#hamburgerNav{
+    width: 3.75rem;
+    height: 2.8125rem;
+    position: absolute;
+    z-index: 2;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    outline: 0;
+}
+#hamburgerNav span{
+    display: block;
+    position: absolute;
+    height: 0.5625rem;
+    width: 100%;
+    background: #000;
+    border-radius: 0.5625rem;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0);
+    transition: 0.5s ease-in-out;
+}
+#hamburgerNav:hover span{
+    background-color: #a9a9a9;
+}
+#hamburgerNav span:first-child{
+    top: 0;
+    transform-origin: left center;
+}
+#hamburgerNav span:nth-child(2){
+    top: 1.3125rem;
+    transform-origin: left center;
+}
+#hamburgerNav span:nth-child(3){
+    top: 2.625rem;
+    transform-origin: left center;
+}
+#hamburgerNav.active span:first-child{
+    transform: rotate(45deg);
+}
+#hamburgerNav.active span:nth-child(2){
+    width: 0%;
+    opacity: 0;
+    transition: 0.1s;
+}
+#hamburgerNav.active span:nth-child(3){
+    transform: rotate(-45deg);
+}
+.lockScroll{
+    overflow: hidden;
+}
+.opacityLayer{
+    width: 65vw;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+#nav{
+    backdrop-filter: blur(1.5rem);
+    -webkit-backdrop-filter: blur(1.5rem);
+    position: absolute;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+}
+#nav.active{
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 2s, visibility;
+}
+.verticalLinks{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(218, 218, 82, 1);
+    width: 35vw;
+    padding: 7.5rem 0;
+    align-items: center;
+}
+.verticalLinks a{
+    display: inline-block;
+    text-decoration: none;
+    padding: 1.5rem 0;
+    font-size: 2rem;
+    text-align: center;
+    background-image: linear-gradient(to right, #a9a9a9, #a9a9a9 50%, #000 50%);
+    background-size: 200% 100%;
+    background-position: -100%;
+    position: relative;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: 0.3s ease-in-out;
+}
+.verticalLinks a:before{
+    content: "";
+    background: #a9a9a9;
+    display: block;
+    position: absolute;
+    bottom: -0.1875rem;
+    left: 0;
+    width: 0;
+    height: 0.1875rem;
+    transition: 0.3s ease-in-out;
+}
+.verticalLinks a:hover{
+    background-position: 0;
+}
+.verticalLinks a:hover::before{
+    width: 100%;
+}
+.page{
     background-image: url(./images/blurryLights.webp);
     background-position: center center;
     background-repeat: no-repeat;
@@ -18,7 +143,7 @@ body{
 .title{
     text-align: center;
     margin: 0;
-    padding: 1rem;
+    padding: 1.5rem;
     box-sizing: border-box;
     color: white;
 }
@@ -32,7 +157,7 @@ body{
     width: 100vw;
     justify-content: center;
     align-items: center;
-    padding: 0rem 1rem 2rem 1rem;
+    padding: 1rem 1rem 2rem 1rem;
     box-sizing: border-box;
 }
 .profilePictureContainer {
@@ -60,13 +185,13 @@ h2, h3{
     width: 70%;            
     overflow: hidden;         
 }
-.scrollContainer {
+.scrollContainer{
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
     display: flex;
 }
-.scrollText {
+.scrollText{
     display: inline-block;
     padding-left: .5rem;
     padding-right: .5rem;
@@ -89,6 +214,10 @@ h2, h3{
     color: white;
 }
 .trackSection ol{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: 0;
     padding-bottom: 2rem;
     padding-inline-start: 2.5rem;
@@ -97,6 +226,7 @@ h2, h3{
 }
 .trackSection li{
     margin: 1rem 0;
+    width: 75vw;
 }
 button{
     padding: .5rem 1rem;
@@ -106,6 +236,10 @@ button{
     color: black;
     background-color: rgba(218, 218, 82, 1);
 }
+.buttonLink a{
+    text-decoration: none;
+    color: black;
+}
 
 @media (min-width: 768px){ 
     .trackSection, .featureSongs{
@@ -113,6 +247,9 @@ button{
     } 
     .trackSection ol{
         padding-inline-start: 3rem;
+    }
+    .trackSection li{
+        width: 50vw;
     }
     button{
         font-size: 1.25rem;
@@ -127,6 +264,9 @@ button{
     } 
     .trackSection ol{
         padding-inline-start: 3.5rem;
+    }
+    .trackSection li{
+        width: 25vw;
     }
     button{
         font-size: 1.25rem;
