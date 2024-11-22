@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { fetchSpotifyData } from '../services/fetchSpotifyData';
+import Loading from './Loading'
 import ScrollText from './ScrollText';
+import TopTracks from './TopTracks';
 
 const Home = ({ accessToken }) => {
   const [loading, setLoading] = useState(true)
@@ -41,18 +43,17 @@ const Home = ({ accessToken }) => {
   }, [accessToken]);
   
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (error) {
     return <h1>Error fetching spotify data.</h1>;
   }
-  console.log(topMonthTracks)
 
   return (
     <div className='home'>
-      <h1 className='title'>My Sound</h1>
       <div className='profile'>
+        <h1 className='title'>My Sound</h1>
         <div className='homeDataContainer'>
           <div className='profilePictureContainer' style={{ backgroundImage: `url(${userData.images[0]?.url})` }}>
           </div>
@@ -70,42 +71,9 @@ const Home = ({ accessToken }) => {
         </div>
         <h2 className='userName'>{userData.display_name}</h2>
       </div>
-      <section>
-        <h2>Top 50: All Time</h2>
-        <ul>
-          {topAllTimeTracks.items.map((song, index) => (
-            <li key={index}>
-              {song.name}
-              <br/>
-              {song.artists.map((artist) => artist.name).join(', ')}
-            </li>
-          ))}
-        </ul>
-      </section>
-      <section>
-        <h2>Top 50: Last Six Month</h2>
-        <ul>
-          {topSixMonthsTracks.items.map((song, index) => (
-            <li key={index}>
-              {song.name}
-              <br/>
-              {song.artists.map((artist) => artist.name).join(', ')}
-            </li>
-          ))}
-        </ul>
-      </section>
-      <section>
-        <h2>Top 50: Last Month</h2>
-        <ul>
-          {topMonthTracks.items.map((song, index) => (
-            <li key={index}>
-              {song.name} 
-              <br/>
-              {song.artists.map((artist) => artist.name).join(', ')}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <TopTracks text={' All Time'} timeframe={topAllTimeTracks} amount={5} full={false}/>
+      <TopTracks text={' Last Six Months'} timeframe={topSixMonthsTracks} amount={5} full={false}/>
+      <TopTracks text={' Last Month'} timeframe={topMonthTracks} amount={5} full={false}/>
     </div>
   );
 };
