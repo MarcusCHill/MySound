@@ -9,6 +9,7 @@ const scope = 'user-read-private user-read-email user-top-read';
 
 const Spotify = () => {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
+  const [refreshed, setRefreshed] = useState(0)
 
   useEffect(() => {
     // Check if code is in the URL (callback from Spotify)
@@ -59,27 +60,42 @@ const Spotify = () => {
   };
 
   const refreshToken = async () => {
+
+    // refresh token that has been previously stored
     const refreshToken = localStorage.getItem('refresh_token');
+ 
+     const payload = {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/x-www-form-urlencoded'
+       },
+       body: new URLSearchParams({
+         grant_type: 'refresh_token',
+         refresh_token: refreshToken,
+         client_id: clientId
+       }),
+     }
+     const body = await fetch(tokenEndpoint, payload);
+     const response = await body.json();
+ 
+     localStorage.setItem('access_token', response.access_token);
+     setAccessToken(localStorage.getItem('access_token'))
+     if (response.refresh_token) {
+       localStorage.setItem('refresh_token', response.refresh_token);
+       setRefreshed((previous) => previous + 1)
+     }
+   }
 
-    const response = await fetch(tokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        client_id: clientId,
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-      }),
-    });
+  useEffect(() => {
+    const expires_in = localStorage.getItem('expires_in')
+    if (expires_in) {
+      const timeout = setTimeout (() => {
+        refreshToken();
+      }, (expires_in - 60) * 1000);
 
-    const data = await response.json();
-    if (data.access_token) {
-      setAccessToken(data.access_token);
-      localStorage.setItem('access_token', data.access_token);
-      localStorage.setItem('expires_in', data.expires_in);
+      return () => clearTimeout(timeout)
     }
-  };
+  }, [refreshed])
 
   const generateRandomString = (length) => {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -98,16 +114,15 @@ const Spotify = () => {
   };
 
   return (
-    <div>
+    <>
       {!accessToken ? (
         <button onClick={redirectToSpotifyAuthorize}>Log in with Spotify</button>
       ) : (
-        <div>
+        <>
           <Home accessToken={accessToken} />
-          <button onClick={refreshToken}>Refresh Token</button>
-        </div>
+        </>
       )}
-    </div>
+    </>
   );
 };
 
