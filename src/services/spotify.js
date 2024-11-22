@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Routes, Route } from "react-router-dom";
+import Login from '../components/Login';
+import Guest from '../components/Guest'
 import Home from '../components/Home';
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
@@ -116,11 +119,15 @@ const Spotify = () => {
   return (
     <>
       {!accessToken ? (
-        <button onClick={redirectToSpotifyAuthorize}>Log in with Spotify</button>
+        <Routes>
+          <Route path='/' element={<Login autorize={redirectToSpotifyAuthorize}/>} />
+          <Route path='/guest' element={<Guest/>} />
+        </Routes>
+    
       ) : (
-        <>
-          <Home accessToken={accessToken} />
-        </>
+        <Routes>
+          <Route path="/callback" element={<Home accessToken={accessToken}/>} />
+        </Routes>
       )}
     </>
   );
