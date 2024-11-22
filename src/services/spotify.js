@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
+import { SpotifyDataProvider } from "./spotifyDataContext.js";
 import Login from '../components/Login';
 import Guest from '../components/Guest'
 import Home from '../components/Home';
+import AllTime from '../components/AllTime';
+import SixMonths from '../components/SixMonths';
+import LastMonth from '../components/LastMonth';
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
 const redirectUrl = process.env.REACT_APP_REDIRECT_URI;
@@ -117,19 +121,25 @@ const Spotify = () => {
   };
 
   return (
-    <>
-      {!accessToken ? (
-        <Routes>
-          <Route path='/' element={<Login autorize={redirectToSpotifyAuthorize}/>} />
-          <Route path='/guest' element={<Guest/>} />
-        </Routes>
-    
-      ) : (
-        <Routes>
-          <Route path="/callback" element={<Home accessToken={accessToken}/>} />
-        </Routes>
-      )}
-    </>
+    <SpotifyDataProvider accessToken={accessToken}>
+      <Routes>
+        {!accessToken ? (
+          <>
+            <Route path='/' element={<Login autorize={redirectToSpotifyAuthorize}/>} />
+            <Route path='/guest' element={<Guest/>} />      
+          </>
+        ) : (
+          <>
+            <Route path='/' element={<Login autorize={redirectToSpotifyAuthorize}/>} />
+            <Route path="/callback" element={<Home/>} />
+            <Route path="/callback/all-time" element={<AllTime/>} />
+            <Route path="/callback/six-months" element={<SixMonths/>} />
+            <Route path="/callback/last-month" element={<LastMonth/>} />
+            <Route path='/guest' element={<Guest/>} />
+          </>
+        )}
+      </Routes>
+    </SpotifyDataProvider>
   );
 };
 
