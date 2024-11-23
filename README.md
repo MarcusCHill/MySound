@@ -62,7 +62,7 @@ Welcome to **MySound**, a React app that allows users to authenticate with their
 ### How It Works
 
 1. **Authentication**:  
-   When you launch the app, you’ll be redirected to Spotify’s login page. Enter your credentials to authenticate.
+   When you launch the app, you can navigate to be redirected to Spotify’s login page. Enter your credentials to authenticate.
 
 2. **Permission Grant**:  
    After successful authentication, the app requests permission to access your profile and music data. Once granted, the app receives a token for secure communication with the Spotify Web API.
