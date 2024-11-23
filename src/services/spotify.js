@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import { SpotifyDataProvider } from "./spotifyDataContext.js";
 import Login from '../components/Login';
-import Guest from '../components/Guest'
 import Home from '../components/Home';
 import AllTime from '../components/AllTime';
 import SixMonths from '../components/SixMonths';
@@ -121,21 +120,19 @@ const Spotify = () => {
   };
 
   return (
-    <SpotifyDataProvider accessToken={accessToken}>
+    <SpotifyDataProvider accessToken={accessToken} refreshToken={refreshToken}>
       <Routes>
         {!accessToken ? (
           <>
-            <Route path='/' element={<Login autorize={redirectToSpotifyAuthorize}/>} />
-            <Route path='/guest' element={<Guest/>} />      
+            <Route path='/' element={<Login autorize={redirectToSpotifyAuthorize}/>} />    
           </>
         ) : (
           <>
             <Route path='/' element={<Login autorize={redirectToSpotifyAuthorize}/>} />
-            <Route path="/callback" element={<Home/>} />
-            <Route path="/callback/all-time" element={<AllTime/>} />
-            <Route path="/callback/six-months" element={<SixMonths/>} />
-            <Route path="/callback/last-month" element={<LastMonth/>} />
-            <Route path='/guest' element={<Guest/>} />
+            <Route path="/callback" element={<Home refreshToken={refreshToken}/>} />
+            <Route path="/callback/all-time" element={<AllTime refreshToken={refreshToken}/>} />
+            <Route path="/callback/six-months" element={<SixMonths refreshToken={refreshToken}/>} />
+            <Route path="/callback/last-month" element={<LastMonth refreshToken={refreshToken}/>} />
           </>
         )}
       </Routes>

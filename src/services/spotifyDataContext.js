@@ -14,6 +14,7 @@ export const SpotifyDataProvider = ({ children, accessToken }) => {
   });
 
   useEffect(() => {
+    console.log(accessToken)
     const fetchData = async () => {
       if (accessToken) {
         try {
@@ -29,6 +30,7 @@ export const SpotifyDataProvider = ({ children, accessToken }) => {
           const shortTerm = await fetchSpotifyData(accessToken, "me/top/tracks?limit=50&time_range=short_term");
 
           setTopTracks({ longTerm, mediumTerm, shortTerm });
+          setError(null)
           setLoading(false);
         } catch (err) {
           setError(err);
