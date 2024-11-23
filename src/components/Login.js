@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
                 <h2>Welcome To</h2>
                 <h1>My Sound</h1>
                 <button onClick={autorize}>Login with Spotify</button>
-                <Link to="/guest">No Spotify Account?</Link>
+                <Link to="https://www.spotify.com/us/signup" target="_blank">No Spotify Account?</Link>
             </div>
         )
     }
