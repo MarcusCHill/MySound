@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom"
+//Browser Router from react-router-dom to handle page navigation
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

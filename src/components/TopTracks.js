@@ -2,16 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSpotifyData } from "../services/spotifyDataContext.js";
 
+//TopTracks accepts text and amount
+//Returns a section with a title defined through 'text' and an ordered list that maps the defined 'amount' of a users top tracks
 const TopTracks = ({ text, amount }) => {
-  const { topTracks, loading, error } = useSpotifyData();
+  const { topTracks } = useSpotifyData();
+  //use the current path to determin the to field within the Link
+  //If currentPath is not one of the predefined routes (all-time, six-months or last-month) then the button will render and provide the corresponding path
   const currentPath = window.location.pathname;
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading tracks.</div>;
 
   let tracks;
   let path = "";
 
+  //So the component is reusable we load the correct tracks and path for button based on the provided text argument
   if (text === " All Time") {
     tracks = topTracks.longTerm;
     path = "all-time";
@@ -37,9 +39,11 @@ const TopTracks = ({ text, amount }) => {
           </li>
         ))}
       </ol>
-      {currentPath !== `/callback/${path}` && <button className="buttonLink">
-        <Link to={`${path}`}>{text}</Link>
-      </button>}
+      {currentPath !== `/callback/${path}` && 
+        <button className="buttonLink">
+          <Link to={`${path}`}>{text}</Link>
+        </button>
+      }
     </section>
   );
 };

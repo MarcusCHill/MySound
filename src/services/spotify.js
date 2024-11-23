@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import { SpotifyDataProvider } from "./spotifyDataContext.js";
-import Login from '../components/Login';
-import Home from '../components/Home';
-import AllTime from '../components/AllTime';
-import SixMonths from '../components/SixMonths';
-import LastMonth from '../components/LastMonth';
+import Login from '../pages/Login.js';
+import Home from '../pages/Home.js';
+import AllTime from '../pages/AllTime.js';
+import SixMonths from '../pages/SixMonths.js';
+import LastMonth from '../pages/LastMonth.js';
 
+//prepare clientId and redirectUrl for Spotify API Authorization code PKCE
+// No usage of Client Secret due to Spotify offering PKCE Authorization
 const clientId = process.env.REACT_APP_CLIENT_ID;
 const redirectUrl = process.env.REACT_APP_REDIRECT_URI;
 const authorizationEndpoint = 'https://accounts.spotify.com/authorize';
 const tokenEndpoint = 'https://accounts.spotify.com/api/token';
 const scope = 'user-read-private user-read-email user-top-read';
 
+//Spotify Component returns SpotifyDataProvider and conditionally rendered Routes based on accessToken boolean 
+/***
+  
+  *Part of this code is derived from spotify documentation and Spotify GitHub WebAPI Examples! 
+
+  https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow
+  https://github.com/spotify/web-api-examples/blob/master/authorization/authorization_code_pkce/public/app.js
+
+***/
+
 const Spotify = () => {
+  //useState for accessToken and refreshed. accessToken used for autorization in API request, refreshed used for monitoring the expiry state of the refresh/accessToken
   const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
   const [refreshed, setRefreshed] = useState(0)
 
@@ -88,10 +101,12 @@ const Spotify = () => {
      setAccessToken(localStorage.getItem('access_token'))
      if (response.refresh_token) {
        localStorage.setItem('refresh_token', response.refresh_token);
+       //increment refreshed state to reset timeout in useEffect
        setRefreshed((previous) => previous + 1)
      }
    }
-
+  
+  //use Effect to refresh the refresh token one minute before it expires
   useEffect(() => {
     const expires_in = localStorage.getItem('expires_in')
     if (expires_in) {

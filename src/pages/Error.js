@@ -1,5 +1,7 @@
 import React from 'react';
 
+//Accepts refreshToken to provide user the opportunity to resolve the error due to an invalid Token
+//refreshToken is defined in services/spotify.js
 const Error = ({ refreshToken }) => {
     
     return (

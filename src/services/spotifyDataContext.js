@@ -1,9 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { fetchSpotifyData } from "../services/fetchSpotifyData";
 
+//Create context to hold specified values to be shared across components/routes
 const SpotifyDataContext = createContext();
 
+//Spotify Data Provider is a wrapper component that accepts accessToken retrieved in Spotify.js
+//API get requests are used to set the provider with data used across children components
 export const SpotifyDataProvider = ({ children, accessToken }) => {
+  //useState for loading, error, userData, topTracks variables and setter functions
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userData, setUserData] = useState(null);
@@ -13,6 +17,8 @@ export const SpotifyDataProvider = ({ children, accessToken }) => {
     shortTerm: null,
   });
 
+  //useEffect hook to trigger fetchData when component mounts and when accessToken changes. 
+  //While fetching data loading is true, If there is an error we setError to true
   useEffect(() => {
     const fetchData = async () => {
       if (accessToken) {
@@ -41,6 +47,7 @@ export const SpotifyDataProvider = ({ children, accessToken }) => {
     fetchData();
   }, [accessToken]);
 
+  //values passed to the context provider
   const value = {
     loading,
     error,

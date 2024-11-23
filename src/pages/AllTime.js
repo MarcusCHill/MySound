@@ -1,10 +1,14 @@
 import React from "react";
-import HamburgerNav from "./HamburgerNav";
-import TopTracks from "./TopTracks";
+import HamburgerNav from "../components/HamburgerNav";
+import TopTracks from "../components/TopTracks";
 import { useSpotifyData } from "../services/spotifyDataContext";
 import Loading from "./Loading";
 import Error from "./Error";
 
+//All Time Route/page accepts refreshToken for Error Page
+//Returns Loading if loading state is true
+//Returns Error if Error state is true
+//Returns the top 50 tracks through TopTracks component
 const AllTime = ({ refreshToken }) => {
 
     const { loading, error } = useSpotifyData();

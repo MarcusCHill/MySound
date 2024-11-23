@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom"
 
+//Nav component returns Links to pages based on current path
+//Accepts isActive and handleClick defined in hamburgerNav
 export function Nav({ isActive, handleClick }) {
 
     const currentPath = window.location.pathname;
 
+    //clear tokens and code when user signs out
     const handleSignOut = () => {
         localStorage.clear()
     }
 
+    //shows all avaible pages except the current path/page
     return (
         <div id="nav" className={isActive ? "active": null}>
         <div className="opacityLayer"></div>

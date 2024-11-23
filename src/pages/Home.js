@@ -1,12 +1,28 @@
 import React from 'react';
 import { useSpotifyData } from "../services/spotifyDataContext.js";
-import HamburgerNav from './HamburgerNav';
-import Loading from './Loading';
+import HamburgerNav from '../components/HamburgerNav.js';
+import Loading from './Loading.js';
 import Error from './Error.js';
-import ScrollText from './ScrollText';
-import TopTracks from './TopTracks';
+import ScrollText from '../components/ScrollText.js';
+import TopTracks from '../components/TopTracks.js';
 
+
+//Home component accepts refreshToken for Error page
+//Returns Loading if loading state is true
+//Returns Error if error state is true
+/*
+  Returns:
+    the users profile Picture,
+    spotify username, 
+    top all time track, 
+    top last six months track, 
+    top track over the last month,
+    top 5 all time tracks,
+    top 5 last six months tracks,
+    top 5 last month tracks.
+*/
 const Home = ({ refreshToken }) => {  
+  //API data and useState retrieved in services/spotifyDataContext
   const { userData, topTracks, loading, error } = useSpotifyData();
 
   
