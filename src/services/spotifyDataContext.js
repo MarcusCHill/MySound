@@ -14,7 +14,6 @@ export const SpotifyDataProvider = ({ children, accessToken }) => {
   });
 
   useEffect(() => {
-    console.log(accessToken)
     const fetchData = async () => {
       if (accessToken) {
         try {
