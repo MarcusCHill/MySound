@@ -2,19 +2,20 @@ import React from 'react';
 import { useSpotifyData } from "../services/spotifyDataContext.js";
 import HamburgerNav from './HamburgerNav';
 import Loading from './Loading';
+import Error from './Error.js';
 import ScrollText from './ScrollText';
 import TopTracks from './TopTracks';
 
-const Home = () => {  
+const Home = ({ refreshToken }) => {  
   const { userData, topTracks, loading, error } = useSpotifyData();
 
   
   if (loading) {
-    return <Loading/>;
+    return <Loading/>
   }
 
   if (error) {
-    return <h1>Error fetching spotify data.</h1>;
+    return <Error refreshToken={refreshToken}/>
   }
 
   return (

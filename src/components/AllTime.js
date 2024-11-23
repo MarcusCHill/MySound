@@ -3,13 +3,18 @@ import HamburgerNav from "./HamburgerNav";
 import TopTracks from "./TopTracks";
 import { useSpotifyData } from "../services/spotifyDataContext";
 import Loading from "./Loading";
+import Error from "./Error";
 
-const AllTime = () => {
+const AllTime = ({ refreshToken }) => {
 
-    const { loading } = useSpotifyData();
+    const { loading, error } = useSpotifyData();
 
     if (loading) {
-        return <Loading/>;
+        return <Loading/>
+    }
+
+    if (error) {
+        return <Error refreshToken={refreshToken}/>
     }
 
     return (

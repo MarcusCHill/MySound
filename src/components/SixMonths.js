@@ -2,14 +2,19 @@ import React from "react";
 import { useSpotifyData } from "../services/spotifyDataContext";
 import HamburgerNav from "./HamburgerNav";
 import Loading from "./Loading";
+import Error from "./Error";
 import TopTracks from "./TopTracks";
 
-const SixMonths = () => {
+const SixMonths = ({ refreshToken }) => {
 
-    const { loading } = useSpotifyData();
+    const { loading, error } = useSpotifyData();
 
     if (loading) {
-        return <Loading/>;
+        return <Loading/>
+    }
+
+    if (error) {
+        return <Error refreshToken={refreshToken}/>
     }
 
     return (
